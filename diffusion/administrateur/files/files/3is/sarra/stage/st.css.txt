@@ -1,0 +1,139 @@
+	/* --------------- */
+
+	.price{
+                color:#4bae3e;
+		font-size: 22px;
+	}
+
+	.monthly{
+		font-size: 11px;
+		text-transform: uppercase;
+		color: #999;
+	}
+
+	/* --------------- */
+
+	ul {
+		margin: 10px 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	li {
+		padding: 5px 0;
+	}
+	
+	/* --------------- */
+	td{font: 13px "Helvetica Neue",Helvetica,Arial,sans-serif;
+	}
+	#table
+{
+	font: 13px "Helvetica Neue",Helvetica,Arial,sans-serif;	
+	zoom: 90%;
+	-moz-transform: scale(0.85);	
+}
+table{cellspacing:10px; cellpadding:10px;}
+#container
+{
+width: 100%;
+
+}
+	/* --------------- */
+input[type=number]
+ {
+		width: 150px;
+		height:35px;		
+}
+select
+ {
+		width: 160px;
+		height:35px;		
+}
+
+	/* --------------- */
+#range {
+width: 70%;
+height: 21px;
+background: #ecf0f1;
+background:-webkit-gradient(linear,center top, center bottom, from( #C1C1C1),to(#E0E0E0 ),color-stop(20%,#E0E0E0 ));
+-webkit-border-radius:5px;
+-moz-border-radius:5px;
+border: 1px solid #ecf0f1;
+border-radius:20px;
+}
+
+
+#range .ui-slider-handle {
+-webkit-appearance:none;
+background:url('slider-handle.png') no-repeat;
+background-position:center;
+border:0px;
+right:5px;
+top:-2px;
+margin-left:-14px;
+outline:none;
+display:block;
+cursor: pointer;
+width:25px;
+height:24px;
+}
+#range .ui-slider-range {
+background: #4bae3e;
+background:-webkit-gradient(linear,center top, center bottom, from(#B4F027),to( #87CB21 ),color-stop(70%,#87CB21 ));
+margin: 0px;
+border-radius:20px; }
+
+#range #currentVal {
+	  position:absolute;
+	  font-size: 10px;
+	  color: #aaa;
+	  width: 100%;
+	  text-align: center;
+	  margin-top: -20px;
+	  display:table-cell;
+	}
+	
+
+	/* --------------- */
+#rangecpu{
+width: 70%;
+height: 21px;
+background: #ecf0f1;
+background:-webkit-gradient(linear,center top, center bottom, from( #C1C1C1),to(#E0E0E0 ),color-stop(20%,#E0E0E0 ));
+-webkit-border-radius:5px;
+-moz-border-radius:5px;
+border: 1px solid #ecf0f1;
+border-radius:20px;
+}
+
+
+#rangecpu .ui-slider-handle {
+-webkit-appearance:none;
+background:url('slider-handle.png') no-repeat;
+background-position:center;
+border:0px;
+right:5px;
+top:-2px;
+margin-left:-14px;
+outline:none;
+display:block;
+cursor: pointer;
+width:25px;
+height:24px;
+}
+#rangecpu .ui-slider-range {
+background: #4bae3e;
+background:-webkit-gradient(linear,center top, center bottom, from(#B4F027),to( #87CB21 ),color-stop(70%,#87CB21 ));
+margin: 0px;
+border-radius:20px;  }
+
+#rangecpu #currentValcpu {
+position:absolute;
+ font-size: 10px;
+ color: #aaa;
+ width: 100%;
+ text-align: center;
+ margin-top: -20px;
+ display:table-cell;
+}	
+	/* end --------------- */

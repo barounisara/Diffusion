@@ -1,0 +1,196 @@
+<?php
+///////////connexion a la base/////////////
+
+/************************IMPORTANT!!!CHANGEZ LES DONNEES DE LA CONNEXION LORS DE L'HEBERGEMENT**************************/
+$dbhost_name = "185.8.51.143"; //  nom du serveur 
+$database = "3iscloud_bd1wp";       // nom de la base de donnees
+$username = "3iscloud_us1wp";            // login
+$password = "_8wG7S%ifpwZ9w3^1v74ka11";            // password 
+try {
+$dbo = new PDO('mysql:host='.$dbhost_name.';dbname='.$database, $username, $password,array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
+} 
+catch (PDOException $e) {
+print "Error!: " . $e->getMessage() . "<br/>";
+die();
+}
+////////////////////////Queries///////////////////////////
+@$ostemplate=$_POST['ostemplate'];
+@$taille=$_POST['taille'];
+
+@$query2="select type from ostemplate";
+@$query2_prix="select prix from ostemplate where type like '$ostemplate' limit 1";
+@$query3="select * from taille";
+@$query3_param="select * from taille  where taille like '$taille' limit 1";
+@$query3_hyperv="select hyperviseur from taille where taille like '$taille' limit 1";
+?>
+
+<html>
+
+<head>
+<!--feuilles de style de bootstrap-->
+<!--feuilles de style-->
+	<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet" media="screen"> 
+	<link rel="stylesheet" type="text/css" href="st.css" media="all" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Serveur Cloud</title>
+</head>
+<body>
+
+<div id="container">
+<table border=0 width='100%'><tr>
+<td width='55%'>
+<div id='table'>
+<form method=post name=f1 action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<table border=0 width='100%' >
+	<tr>
+		<td>
+			Taille
+		</td>
+		<td>
+		<select name='taille'>
+<?php
+//////////        Debut de la premiere liste de selection:taille /////////
+foreach ($dbo->query($query3) as $noticia2) 
+	{
+		echo  "<option value='$noticia2[taille]'>$noticia2[taille]</option>";
+	}
+?>
+			</select>
+		</td>
+	
+	<td>
+		OS
+	</td>
+	<td>
+		<select name="ostemplate">
+			<?php
+//////////////////  Fin de la liste de selection de la taille ///////////
+//////////        Debut de la liste de selection du ostemplate /////////
+foreach ($dbo->query($query2) as $noticia) 
+{
+	echo  "<option value='$noticia[type]'>$noticia[type]</option>";
+}
+//////////////////  Fin de la liste de selection du ostemplate///////////
+?>
+			</select>
+		</td>
+	</tr>
+</table>
+	<center>
+	<hr>
+		<button class='btn btn-success' name='submit' onclick='this.form.submit()'>
+			Calculer
+		</button>
+	</center>
+</form>
+<?php
+if(!isset($_POST['submit']))
+{
+$t="small";
+$o="ostemplate0";
+@$query3_param="select * from taille  where taille like '$t' limit 1";
+@$query2_prix="select prix from ostemplate where type like '$o' limit 1";
+@$query3_hyperv="select hyperviseur from taille where taille like '$t' limit 1";
+$parametres = $dbo->prepare($query3_param); 
+	$parametres->execute(); 
+	$pos = $parametres->fetch();
+	$valcpu=$pos['cpu'];
+	$valram=$pos['ram'];
+	$valespace=$pos['espaceDisque'];
+	$valdebit=$pos['traficReseau'];
+	$valprix=strval($pos['prix']);
+	$param_hyperv = $dbo->prepare($query3_hyperv); 
+	$param_hyperv->execute(); 
+	$hyp = $param_hyperv->fetch();
+	$hyperv=$hyp['hyperviseur'];
+
+	//////////////////  Recuperation du prix ///////////
+
+	$prixos = $dbo->prepare($query2_prix); 
+	$prixos->execute(); 
+	$pos = $prixos->fetch();
+	$prixOsVal=strval($pos['prix']);
+	$prix=$valprix+($prixOsVal*30*24);
+echo"</td><td valign='top'width='45%'><div id='table' class='well'>
+		<center>
+
+                                        <div class='price'>$prix <sup>TND</sup></div>
+					<div class='monthly'>Par mois</div>
+					<hr width='50%'>
+                                         <table border=0 width=100% style='margin-top:-10px'><tr><td width=50%>
+					<center><ul style='border-right:solid 1px #F0F0F0 ;'>
+						<li>Serveur Cloud: Small</li>	
+						<li>Illimité 1000 Mbit/s (2TB/Mois)</li>	
+						<li> Hyperviseur: VMWare </b></li>
+					</ul></center>                                         
+					</td>
+                                         <td>
+					<center> <ul>
+						<li> Système: OSTemplate0</b></li>						
+						<li>1 CPU</li>
+						<li>1 Mémoire RAM</li>
+                                        </ul></center> 
+					</td>
+					</tr>
+					</table>
+                                        <ul>
+						<li>20 Espace Disque</li>			
+					</ul>	
+		</center>
+		</div></td></tr></table>";
+}
+
+if(isset($_POST['submit']))
+{	
+	//////////////////  Recuperation des paramètres de la taille ///////////
+	$parametres = $dbo->prepare($query3_param); 
+	$parametres->execute(); 
+	$pos = $parametres->fetch();
+	$valcpu=$pos['cpu'];
+	$valram=$pos['ram'];
+	$valespace=$pos['espaceDisque'];
+	$valdebit=$pos['traficReseau'];
+	$valprix=strval($pos['prix']);
+	$param_hyperv = $dbo->prepare($query3_hyperv); 
+	$param_hyperv->execute(); 
+	$hyp = $param_hyperv->fetch();
+	$hyperv=$hyp['hyperviseur'];
+
+	//////////////////  Recuperation du prix ///////////
+	$prixos = $dbo->prepare($query2_prix); 
+	$prixos->execute(); 
+	$pos = $prixos->fetch();
+	$prixOsVal=strval($pos['prix']);
+	$prix=$valprix+($prixOsVal*30*24);
+	echo"</td><td valign='top'width='45%'><div id='table' class='well'>
+		<center>
+					<div class='price'>$prix <sup>TND</sup></div>
+					<div class='monthly'>Par mois</div>
+					<hr width='50%'>
+                                        <table border=0 width=100%><tr><td width=50%>
+					<center><ul style='border-right:solid #F0F0F0 ;'>
+					
+					<ul>
+						<li>Serveur Cloud: $taille</li>	
+						<li>$valdebit</li>	
+						<li>Hyperviseur: $hyperv</li>	
+                                        </ul></center>                                         
+					</td>
+                                         <td>
+					<center> <ul>
+						<li>Système: $ostemplate</li>						
+						<li>$valcpu CPU</li>
+						<li>$valram Mémoire RAM</li>
+                                        </ul></center> 
+					</td>
+					</tr>
+					</table>
+                                        <ul>
+						<li>$valespace Espace Disque</li>							
+					</ul>
+		</center></div></td></tr></table>";
+		}
+echo "</div></div>";
+?>
+</body>
+</html>

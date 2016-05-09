@@ -1,0 +1,239 @@
+<?php
+///////////connexion a la base/////////////
+
+/************************IMPORTANT!!!CHANGEZ LES DONNEES DE LA CONNEXION LORS DE L'HEBERGEMENT**************************/
+$dbhost_name = "185.8.51.143"; //  nom du serveur 
+$database = "3iscloud_bd1wp";       // nom de la base de donnees
+$username = "3iscloud_us1wp";            // login
+$password = "_8wG7S%ifpwZ9w3^1v74ka11";            // password 
+try 
+{
+	$dbo = new PDO('mysql:host='.$dbhost_name.';dbname='.$database, $username, $password,array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
+} 
+catch (PDOException $e) 
+{
+	print "Error!: " . $e->getMessage() . "<br/>";
+die();
+}
+////////////////////////Queries///////////////////////////
+$hyp="Cloud privé";
+$query3="select nbr from cpu where nbr>=16";
+@$query6="SELECT * FROM `prixunitaires` WHERE `hyperviseur` like 'Cloud privé'";
+?>
+<html>
+
+<head>
+ <script language='JavaScript'>
+	function validateRam()
+	{
+	var ram=document.getElementById("ram").value;
+	var cpu=document.getElementById("cpu").value;
+	if(ram>2*cpu){alert ("La taille de la RAM doit être inférieure à 2 * CPU!");ram=document.getElementById("ram").value=cpu*2;}
+	}
+	function validatecpu()
+	{
+	var cpu=document.getElementById("cpu").value;
+	var ram=document.getElementById("ram");
+	ram.setAttribute("max",2*cpu);
+	ram.value=4;
+	}
+</script>
+	
+<!--feuilles de style-->
+	<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet" media="screen"> 
+	<link rel="stylesheet"  href="st.css"  />
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script> 
+	<title>Cloud Privé</title>
+</head>
+<body>
+<div id="container">
+
+<table border=0 width='100%'><tr>
+<td width='80%'>
+<div id='table'>  
+<table border=0 width='100%' cellspacing='10px' cellpadding='10px'><tr> 
+<form method="post" name="form1" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+
+<td width="100px">
+CPU</td>
+<td><select name='cpu' id='cpu' style='width: 150px;' onchange='validatecpu()'>
+<?php
+foreach ($dbo->query($query3) as $noticia2) 
+	{
+		if(strcmp($noticia2['nbr'],@$_POST['cpu'])==0)
+			{
+				echo "<option selected value='$noticia2[nbr]'>$noticia2[nbr]</option>"."<BR>";
+			}
+		else
+			{
+				echo  "<option value='$noticia2[nbr]'>$noticia2[nbr]</option>";
+			}
+	}
+	@$_GLOBALS['cpu']=$_POST['cpu'];
+echo "</select></td>";
+//////////////////  Fin de la liste de selection du CPU ///////////
+//////////        Debut de la liste de selection de la RAM /////////
+?>
+
+
+
+			<td width="100px">
+				RAM</b>
+			</td>
+			<td>
+				<?php
+					@$ram=$_POST['ram'];
+					$cpu=strval($_GLOBALS['cpu']);
+					$_GLOBALS['cp']=$cpu;
+					$cpu2=2*$cpu;
+					echo "
+					<input type='hidden' name='cp' value='$cpu'/>
+					<input type='number' id='ram' name='ram' value='32' min=32 max=5000 step=4 onchange='validateRam()'/>	
+			</td>
+			
+	</tr>
+	<tr>
+			<td colspan='4'><hr></td></tr>
+	";
+@$espace=$_POST['espace'];
+echo "<tr>
+			<td>
+				Espace Disque</b>
+			</td>
+			<td>
+				<input type='number' id='espace' name='espace' value='420' min='420' max='50020' step='100' ='Espace Disque'/>
+			</td>
+	";
+//////////////////  Fin de la liste de selection de l'espace disque ///////////
+//////////////////  Debut de la liste de selection des ip publiques///////////
+@$ipp=$_POST['ipp'];
+echo "
+		<td>
+			IP Publiques</b>
+		</td>
+		<td>
+			<input type='number' id='ipp' name='ipp' value='4' min='4' max='100' step='1' ='IP Publiques'/>
+			
+	</tr>";
+//////////////////  Fin de la liste de selection des ip publiques ///////////
+/////////////////  Debut de la liste de selection des VLAN///////////
+@$vlan=$_POST['vlan'];
+echo "<tr>
+			<td colspan='4'>
+			<br><br>
+			<div style='float:left'>VLAN</div>	
+			";
+			?>
+			<input type="hidden" name="vlan" id="vlan"/>
+<div id="range" name="range" style="float:right; margin-right:15%"> 
+
+<div>
+                <span style=" color: #999;font-size:10px; display:inline-block;width: 3%;text-align:left;margin-right: 17%;"><div style="font-size:8px">|</div><br>5</span>
+                <span style="color: #999;font-size:10px;display:inline-block;width: 7%;text-align:center;margin-right: 17%;"><div style="font-size:8px">|</div><br>10</span>
+                <span style="color: #999;font-size:10px;display:inline-block;width: 7%;text-align:center;margin-right: 17%;"><div style="font-size:8px">|</div><br>15</span>
+                <span style="color: #999;font-size:10px;display:inline-block;width: 7%;text-align:center;margin-right: 15%;"><div style="font-size:8px">|</div><br>20</span>
+                <span style="color: #999;font-size:10px;display:inline-block;width: 7%;text-align:center;margin-right: -10%;"><div style="font-size:8px">|</div><br>25</span>
+            </div>      
+</div>
+<script>
+(function() {
+  $("#range").slider({
+    range: "min",
+	min:5,
+	step:5,
+    max: 25,
+    value: 5,
+	animate:"slow",
+    slide: function(e, ui) { 
+		var elem = document.getElementById("vlan");
+		elem.value = ui.value;
+    }
+  });
+  
+}).call(this);
+</script>
+			<?php
+				
+			echo "</td>
+			</tr>";
+//////////////////  Fin de la liste de selection de VLAN ///////////
+
+echo "<tr><td colspan='4'>
+			<br><HR><br>
+<center><button class='btn btn-success' name='submit' onclick='this.form.submit()'> Calculer </button></center>
+</td></tr></form></table></div>";
+
+
+
+if(!isset($_POST["submit"]))
+{
+
+
+
+
+
+
+
+$stmt = $dbo->prepare($query6); 
+		$stmt->execute(); 
+		$row = $stmt->fetch();
+		$r=strval($row["cpu"]);
+		$prixcpu=($row["cpu"]*16)/4;
+		$prixram=($row["ram"]*32)/8;
+		$prixvlan=($row["vlan"]);
+		$prixip=($row["ip"]*4);
+		$prixespace=($row["espace"]*420)/100;
+		$prix=($prixcpu+$prixram+$prixespace+$prixip+$prixvlan);
+echo"</td><td valign='top'width='20%'><div id='table' class='well'>
+		<center>	<div class='price'>$prix<sup>TND</sup></div>
+					<div class='monthly'>Par mois</div>
+					<hr width='50%'>
+					<ul>
+						<li>16 CPU</li>
+						<li>32 Mémoire RAM</li>
+						<li>420 Espace Disque</li>
+						<li>4 IP Publiques</li>
+						<li>5 VLAN</li>			
+					</ul>
+				
+		</center>
+		</div></td></tr></table>";
+
+}
+if(isset($vlan) and strlen($vlan) > 0 and isset($ram) and strlen($ram) > 0 and isset($espace) and strlen($espace) > 0 and isset($_POST['cpu']) and strlen($_POST['cpu']) > 0)
+{		$cpu=$_POST['cpu'];
+		$stmt = $dbo->prepare($query6); 
+		$stmt->execute(); 
+		$row = $stmt->fetch();
+		$r=strval($row["cpu"]);
+		$prixcpu=($row["cpu"]*$cpu)/4;
+		$prixram=($row["ram"]*$ram)/8;
+		$prixvlan=($row["vlan"]*$vlan)/5;
+		$prixip=($row["ip"]*$ipp);
+		$prixespace=($row["espace"]*$espace)/100;
+		$prix=($prixcpu+$prixram+$prixespace+$prixip+$prixvlan);
+		echo"</td><td valign='top'width='20%'><div id='table' class='well'>
+		<center>	<div class='price'>$prix <sup>TND</sup></div>
+					<div class='monthly'>Par mois</div>
+					<hr width='50%'>
+					<ul>
+						<li>$cpu</b> CPU</li>
+						<li>$ram</b> Mémoire RAM</li>
+						<li>$espace</b> Espace Disque</li>
+						<li>$ipp</b> IP Publiques</li>
+						<li>$vlan</b> VLAN</li>			
+					</ul>
+				
+		</center>
+		</div></td></tr></table>
+	";
+}
+?>
+  
+  
+  </div>
+</body>
+</html>

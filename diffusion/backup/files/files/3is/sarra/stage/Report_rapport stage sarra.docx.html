@@ -1,0 +1,419 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Plagiarism Checker | Viper - Free Plagiarism Checker and Scanner Software</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link href="http://feeds.feedburner.com/ViperScanner" rel="alternate" type="application/rss+xml" title="ScanMyEssay RSS. News &amp; Updates"/>
+        <link href="http://www.scanmyessay.com/css/main.css" rel="stylesheet" type="text/css"/>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+        <script src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js" type="text/javascript"></script>
+        <link rel="shortcut icon" href="http://www.scanmyessay.com/favicon.ico"/>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#exp-content").hide();
+                $("#s1").click(function () {
+                    $("#exp-content").fadeIn("slow"); //fadeIn
+                    $("#s1").hide();
+                });
+                $("#h1").click(function () {
+                    $("#exp-content").hide("slow");
+                    $("#s1").show();
+                });
+            });
+            
+        </script>
+
+        <style type="text/css">
+        	
+        	#plg-notes {
+        		margin: 15px 0;
+        	}
+        .no-underline {
+        	text-decoration:none;
+        }
+        .matched-text 
+        {
+        	text-decoration:none;
+        	background-color: #fff86a /*#febbbb*/; 	
+        }
+        #document-text a {
+        	color: #000;
+        }
+        #document-text a:hover {
+        	color: #000;
+        }        
+        .divcenter {
+        	margin: 5px 0;
+        	padding-left: 1px;
+        }
+        .coner-radius 
+        {
+        	-moz-border-radius:3px;
+        	-webkit-border-radius:3px;
+        }
+        #h1 {
+        	display: block;
+        	text-align: right;
+        }
+        
+        #main 
+        {
+        	padding: 5px 5px 20px 5px;       	
+        }
+        #menu ul li h2 
+        {
+           	margin: 5px 5px;
+           	color: #ccc;
+        }
+          
+        	.main-container-top{
+        	
+        		border: 1px solid #fcefa1; /*need removing this*/
+        		background: #fbf9ee;
+        		width: auto;
+        		height: auto;
+        		margin-right: 0;
+        		margin-top: 40px;
+        		float: none;
+        	}
+            .main-container-mid {
+        	    border: 1px solid #aaa; /*need removing this*/
+            	width: auto;
+            	height:auto;
+            	margin: 5px 0;
+            }
+            .main-container-bottom {
+            	border: 1px solid #aaa; /*need removing this*/
+            	width: auto;
+            	height:auto;
+            	margin: 2px 0;	
+            }
+            
+        	.ie-h1-fix {
+        		margin-top: 0px;
+        		padding-bottom: 3px;
+        	}
+        	
+        	.red-text {
+        		color: #c40028;
+        	}
+        	
+        	#rounded-corner
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 9px;
+	margin: 1px;
+	text-align: left;
+	border-collapse: collapse;
+	
+}
+
+#rounded-corner tbody 
+{
+	width: inherit;
+	height: 300px;
+	overflow: scroll;
+	overflow-x: hidden;
+}
+
+#rounded-corner thead th.rounded-location
+{
+	/* background: #ccc;  #b9c9fe;*/
+	-moz-border-radius-topleft: 3px;
+	-webkit-border-top-left-radius: 3px;
+    width: 40%;
+   /* background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(247,247,247,1)), color-stop(50%,rgba(132,132,132,1)), color-stop(50%,rgba(132,132,132,1)), color-stop(100%,rgba(229,229,229,1))); /* Chrome,Safari4+ */
+  /* background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(226,226,226,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(51%,rgba(209,209,209,1)), color-stop(100%,rgba(254,254,254,1))); /* Chrome,Safari4+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(239,239,239,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(52%,rgba(209,209,209,1)), color-stop(100%,rgba(242,242,242,1))); /* Chrome,Safari4+ */
+}
+#rounded-corner thead th.rounded-doc-title
+{
+    width: 30%;
+}
+#rounded-corner thead th.rounded-plg-wrd-count
+{
+}
+#rounded-corner thead th.rounded-mst-plg-pecnt
+{
+}
+#rounded-corner thead th.rounded-unq-wrds-mtch
+{
+}
+#rounded-corner thead th.rounded-unq-mtch-pecnt
+{
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(239,239,239,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(52%,rgba(209,209,209,1)), color-stop(100%,rgba(242,242,242,1))); /* Chrome,Safari4+ */
+	/*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(226,226,226,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(51%,rgba(209,209,209,1)), color-stop(100%,rgba(254,254,254,1))); /* Chrome,Safari4+ */
+	/*background: #ccc;*/
+	-moz-border-radius-topright: 3px;
+	-webkit-border-top-right-radius: 3px;
+}
+#rounded-corner th
+{
+	padding: 8px;
+	font-weight: normal;
+	font-size: 13px;
+	color: #555;
+	/*background: #ccc;*/
+	/*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(226,226,226,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(51%,rgba(209,209,209,1)), color-stop(100%,rgba(254,254,254,1))); /* Chrome,Safari4+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(239,239,239,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(52%,rgba(209,209,209,1)), color-stop(100%,rgba(242,242,242,1))); /* Chrome,Safari4+ */
+}
+#rounded-corner td
+{
+	padding: 8px;
+	background: #f9f9f9;
+	border-top: 1px solid #fff;
+	color: #555;
+	height: auto;
+}
+
+#rounded-corner tfoot td.rounded-foot-left
+{
+	/*background: #ccc;*/
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(242,242,242,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(51%,rgba(209,209,209,1)), color-stop(100%,rgba(226,226,226,1))); /* Chrome,Safari4+ */
+	-moz-border-radius-bottomleft: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+}
+#rounded-corner tfoot td.rounded-foot-right
+{
+	background: #ccc;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(242,242,242,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(51%,rgba(209,209,209,1)), color-stop(100%,rgba(226,226,226,1))); /* Chrome,Safari4+ */
+	-moz-border-radius-bottomright: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+}
+#rounded-corner tbody tr:hover td
+{
+	background: #dadada;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(50%,rgba(241,241,241,1)), color-stop(51%,rgba(225,225,225,1)), color-stop(100%,rgba(246,246,246,1))); /* Chrome,Safari4+ */
+	/*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(235,241,246,1)), color-stop(50%,rgba(171,211,238,1)), color-stop(51%,rgba(137,195,235,1)), color-stop(100%,rgba(213,235,251,1))); /* Chrome,Safari4+ */
+	/*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(50%,rgba(244,250,249,1)), color-stop(51%,rgba(231,245,243,1)), color-stop(100%,rgba(248,252,251,1))); /* Chrome,Safari4+ */
+	/*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(50%,rgba(234,255,229,1)), color-stop(51%,rgba(209,255,199,1)), color-stop(100%,rgba(240,255,237,1))); /* Chrome,Safari4+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(50%,rgba(255,238,229,1)), color-stop(51%,rgba(255,219,199,1)), color-stop(100%,rgba(255,243,237,1))); /* Chrome,Safari4+ */
+}
+        </style>
+       
+    </head>
+    <body>
+        <div id="wrap">
+            
+            <div id="top">
+                <div id="top-left-tr">
+                    <a href="http://www.scanmyessay.com" title="ScanMyEssay">
+                        <span>Plagiarism Checker</span>
+                    </a> 
+                </div>
+
+                <div id="top-tr">
+                    <a href="http://www.scanmyessay.com/feedback/index.php" title="Contact us">Contact us</a>
+                    | 
+                    <a href="http://www.scanmyessay.com/universities.php">Universities</a>
+                    |
+                    <a href="http://www.scanmyessay.com/viper-background.php">History</a>
+                    |
+                    <a href="http://www.scanmyessay.com/testimonies.php">Testimonies</a>
+                    |
+                    <a href="http://www.scanmyessay.com/press/index.php" title="Viper Press">Press</a>
+                    |
+                    <a href="http://www.scanmyessay.com/about-us.php" title="About us">About us</a>
+                    |
+                    <a href="http://www.scanmyessay.com/sitemap.php" title="Sitemap">Sitemap</a>
+                    |
+                    <a href="http://www.scanmyessay.com/help/index.php" title="Help">Help</a>
+                    |
+                    <a href="http://www.ukessays.com/essay-help.php" title="Essay help" target="_blank">Essay help</a>
+                    |
+                    <a href="http://www.scanmyessay.com/rss/index.php" title="RSS">RSS</a>
+                    |
+                    <a href="http://www.scanmyessay.com/login/index.php" title="Log in">Log in</a>
+                </div>    
+            </div>
+               
+            <div id="menu">
+                <ul>
+                    <li>
+                        <h2>Plagiarism Report For 'rapport stage sarra.docx'</h2>
+                    </li>
+                </ul> 
+            </div>
+
+            <div id="main">
+                <div class="main-container-top coner-radius">
+                    <h1 class="red-text ie-h1-fix">
+                        How does Viper work.....?
+                    </h1>
+                    <a id="s1" class="no-underline" href="#">[+] Read more..</a>
+					<div id="exp-content">
+                        Viper scans your work against over 10 billion web pages and work previously 
+                        submitted to our firm. Once the scan is completed, the report delivers content 
+                        that may match these other sources, including links to the sites that contain 
+                        the same content.
+                        <br />
+                        <br />
+                        <b class="red-text">What Do the Results Mean?</b><br />
+                        If the report sends back positive matches to content found elsewhere, there is no need to panic and assume you have plagiarised your work. Instead, review the report carefully and consider the following:
+                       
+                        <ul>
+                        <li>
+                        Is the material an entire quote, a sentence, or a fragment of 4-5 words often found together? Viper will show a match where there is a string of five or more 
+                        words that are the same as your work. Even if this is not actually plagiarism, it is important that Viper does not ignore these fragments as they draw your 
+                        attention to any sentences where the writer has &#39;rephrased&#39; parts of the 
+                        original material without referencing the source.
+                        </li> 
+                            
+                        <li>If it was intended to be a quote that you were going to attribute to the source, 
+                            did you remember to properly reference it? Sometimes, Viper will identify 
+                            matching material that is available on websites, but the reference might have 
+                            been found within another source. Just because the work has content that matches 
+                            a particular website does not mean that every possible source where it appears 
+                            has to be referenced. Just make sure that at least one reference covers that 
+                        content.
+						</li>
+                        <li>Did you actually use a footnote and it was just simply not picked up by Viper? 
+                            This review is just a means of double-checking that all references have been 
+                            included.
+						</li>
+                        <li>Could Viper have just picked up a phrase that you used more than once in your 
+                            document? This may be a way to ensure that your writing is tight rather than 
+                            repetitive or relies on overly used phrases.
+						</li>    
+                        <li>Did you use too many direct quotes? Viper checks for direct quotes and delivers 
+                            an overall percentage of words it views as direct quotes. Clearly, this should 
+                            not be too high as work that relies too heavily on other material is not 
+                            &#39;original&#39;.
+						</li>
+                        </ul>
+                            <b class="red-text">A Guide on Viper Results</b>
+                            <br/>This guide explains how Viper can identify matching content when it scans your work:
+                            <br/>
+                            <br/><b class="red-text">Overall plagiarism rating 6% or less : </b>
+                            <br/>The results are that it is highly unlikely that this document contains plagiarised material. A careful check will only be necessary if this is a lengthy document. For example, a 6% result within a 15,000 word essay would be of concern because it could mean that direct quotes are too lengthy or there are too many places where a reference was not listed.<br/>
+                            <br/><b class="red-text">Overall plagiarism rating 6% - 12% : </b>
+                            <br/>The results are that there is a low risk that the document contains any plagiarised material. Most of the matching content will probably be fragments. Review your report for any sections that may not have been referenced properly.<br/>
+                            <br/><b class="red-text">Overall plagiarism rating 13% - 20% : </b>
+                            <br/>The results are that there is a medium risk that the document contains any plagiarised material. There may be sections that match websites so it is important to check that proper credit was attributed to the other sources. The scan may not have detected quotation marks or footnotes that were used. For example, if an opening quotation mark was included but there was not a closing quotation mark, then this could explain the higher result. <br/>
+                            <br/><b class="red-text">Overall plagiarism rating 21%+ : </b>
+                            <br/>The results are that there is a high risk that the document contains plagiarised material. If the overall rating is this high, you need to check your report very carefully. It may be that there are a lot of matching fragments and the software has not identified all direct quotes , but it is critical that you go through the entire document and address every phrase or fragment that the scan has flagged to reduce this percentage.<br/>
+                            <a id="h1" class="no-underline" href="#">[-] hide</a>
+                        
+                    </div>
+                </div>
+                <div class="main-container-mid coner-radius">
+                    <table id="rounded-corner" summary="URL found to be copied">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="rounded-location">Location</th>
+                                <th scope="col" class="rounded-doc-title">Title</th>
+                                <th scope="col" class="rounded-plg-wrd-count">Words Matched</th>
+                                <th scope="col" class="rounded-mst-plg-pecnt">Match (%)</th>
+                                <th scope="col" class="rounded-unq-wrds-mtch">Unique Words Matched</th>
+                                <th scope="col" class="rounded-unq-mtch-pecnt">Unique Match (%)</th>
+                            </tr>
+                        </thead>    
+                        <tfoot>
+                            <tr>
+                                <td colspan="5" class="rounded-foot-left"><em>Documents found to be plagiarised</em></td>
+                                <td class="rounded-foot-right">&nbsp;</td>
+                            </tr>
+                        </tfoot>
+                        <tbody id="ajaxtable">
+                            <tr><td><a href=http://www.manager-go.com/marketing/relationnel.htm target="_blank">http://www.manager-go.com/marketing/relationnel.htm</a></td><td>Relation client et Marketing relationnel - concepts et mÃ©thodes</td><td>29</td><td>1</td><td>29</td><td>1</td></tr><tr><td><a href=http://www.memoireonline.com/07/08/1363/m_conception-realisation-application-gestion-centre-kinesie9.html target="_blank">http://www.memoireonline.com/07/08/1363/m_conception-realisation-application-gestion-centre-kinesie9.html</a></td><td>Memoire Online - conception et rÃ©alisation d'une application ...</td><td>57</td><td>1</td><td>57</td><td>1</td></tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+                <div id="plg-notes" class="divcenter red-text">
+                       <b> Matching Content: 2%</b>
+                    </div> 
+                <div class="main-container-bottom coner-radius">
+                    <div id="document-text" class="divcenter">
+                        <h2>Master Document Text</h2>
+                        <!--<a href="" class="matched-text"> xyz </a> -->
+                        <p> Introduction g‚n‚rale:Au vu des ‚volutions continuelles des technologies de l'information et de la communication (TIC), et principalement, dans le<br /> cadre de la soci‚t‚ de l'information, les diff‚rentes entreprises sont amen‚es … adapter des strat‚gies … ces mutations importantes. Ces mutations<br /> imposent une r‚activit‚ croissante dans les soci‚t‚s envers la clientŠle face aux TIC.L'organisme doit donc, recentrer son organisation interne au<br /> tour de la communication et le partage de l'information. Ceci permettra de fid‚liser efficacement les clients, d'augmenter la r‚activit‚, d'affronter<br /> la concurrence et de faire un suivi plus efficace.Le CRM (Customer Relationship Management) ÿou encore (GRC) la Gestion de la Relation avec le Client<br /> occupe un r“le de plus en plus important en Tunisie et devient un principe d'organisation et de gestion qui influence grandement le succŠs des<br /> grandes entreprises. Nombreuses entre elles subissent une concurrence renforc‚e et font des efforts pour pouvoir se maintenir face … cette derniŠre<br /> En effet, le succŠs d'une entreprise repose d‚sormais en grande partie sur sa capacit‚ … satisfaire ses clients. Le CRM est donc devenu un outil pour<br /> faire la diff‚rence sur le march‚. De ce fait, les soci‚t‚s d'aujourd'hui doivent faire face … un nouveau d‚fi, celui d'optimiser leur GRC. C'est en<br /> vue de cet objectif que l'entreprise 3is s'est vue entretenir sa solution CRM et son site web. S'inscrivant dans ce contexte, notre stage consiste<br /> personnaliser la plate-forme Salesforce et modifier le site web 3is.L'objectif de ce rapport est de d‚crire les phases du d‚roulement du stage. De ce<br /> fait, la r‚partition des diff‚rentes parties est faite selon l'ordre chronologique des tƒches ex‚cut‚es.Dans le premier chapitre, nous donnons une pr<br /> sentation de la soci‚t‚ 3IS, une brŠve description du cadre du stage, son orientation ainsi qu'une description brŠve du processus de d‚veloppement<br /> adopt‚.Chapitre 1ÿ: Cadre de r‚f‚rence.Afin de s'adapter aux ‚volutions ainsi que les nouvelles technologies, la modernisation et l'automatisation<br /> des interactions avec les clients, notamment dans le domaine du CRM et Marketing. S'inscrivant dans ce contexte, nous pr‚senterons dans ce chapitre l<br /> organisme d'accueil. Nous soulŠverons ensuite le cadre du stage. Enfin, nous donnerons une description pr‚liminaire du travail demand‚.Pr‚sentation<br /> de l'organisme d'accueilÿ:N‚e de la fusion strat‚gique des soci‚t‚s 3i et 3iS sous l'appellation 3iS. Cette entreprise est l'un des principaux<br /> fournisseurs de technologie de l'information, de produits et de services aux entreprises en Tunisie. Les offres de 3iS incluent le mat‚riel, les<br /> logiciels et les services informatiques avanc‚s. Elle dispose de l'offre la plus large du march‚ en produits d'infrastructures et en logiciels.Cadre<br /> du stage:Ce pr‚sent rapport s'inscrit dans le cadre du stage d'‚t‚ du cycle d'ing‚nieur en G‚nie Logiciel et SystŠmes d'Information de l'Institut Sup<br /> rieure Informatique (ISI). Ayant pour but de  concr‚tiser nos connaissances acquises tout au long de notre cursus universitaire, il nous permet d<br /> approfondir nos comp‚tences en matiŠre de conception, de programmation et de gestion des projets. Permettant ainsi d'int‚grer le monde professionnel<br /> tout en d‚veloppant notre aptitude de travailler d'une fa‡on collaborative.Avec la concurrence qui envahit tous les canaux d'interaction<a href='http://www.manager-go.com/marketing/relationnel.htm' class="matched-text" title='http://www.manager-go.com/marketing/relationnel.htm' target='_blank'> et notamment<br /> internet, les marques</a> et les entreprises ont tout int‚rˆt … engager une conversation personnelle avec leurs clients pour les fid‚liser et surtout<br /> pour ‚viter de voir son portefeuille partir peu … peu … la<a href='http://www.manager-go.com/marketing/relationnel.htm' class="matched-text" title='http://www.manager-go.com/marketing/relationnel.htm' target='_blank'> concurrence.ÿLe marketing relationnel prend alors toute son importance pour aider<br /></a> entreprises …<a href='http://www.manager-go.com/marketing/relationnel.htm' class="matched-text" title='http://www.manager-go.com/marketing/relationnel.htm' target='_blank'> cr‚er une relation client forte. D'autant que les approches</a> commerciales classiques commencent … connaŒtre leurs limites.De ce fait<br /> Is s'est vue entretenir sa solution CRM et son site web en int‚grant deux principales composantes … savoir, un module de gestion des fiches de r<br /> ception et des rapports d'intervention et un module de calcul de prix de ses offres cloud.Cycle de d‚veloppementÿ:Nous avons choisi d'adopter un<br /> cycle de d‚veloppement it‚ratif dans chacun des deux modules d‚velopp‚s. Cette approche a ‚t‚ choisie en fonction de la nature des modules et de la<br /> dur‚e de r‚alisation.Au cours de ce chapitre nous avons pr‚sent‚ le cadre de r‚f‚rence de notre stage en pr‚sentant l'organisme d'accueil, en d<br /> crivant aprŠs le contexte g‚n‚ral de nos tƒches et enfin en indiquant le processus de d‚veloppement. Dans le chapitre qui suit nous allons<br /> approfondir les connaissances et d‚limiter les contours du premier module.Partie 1: Module de gestion des fiches de r‚ceptionÿet des rapports d<br /> intervention.Introductionÿ:Dans cette partie nous allons nous int‚resser aux diff‚rentes phases de construction de ce g‚n‚rateur. Une phase d<br /> incubation sera r‚alis‚e dans le premier chapitre d‚crivant l'‚tat de l'art et la solution adopt‚e rependant aux limites du systŠme actuel. En second<br /> lieu, nous allons passer … la phase d'‚laboration o— nous nous approfondirons dans l'aspect fonctionnel de notre solution avant d'entamer la phase de<br /> construction  qui aura pour objectif de centrer le d‚veloppement. Enfin nous terminerons par la pr‚sentation de quelques interfaces de notre module<br /> qui, en outre, constitue la derniŠre phase du processus qui est celle de transition. Chapitre 1ÿ: Phase d'incubationCette ‚tape du rapport est trŠs<br /> importante au niveau de l'‚laboration de notre projet puisqu'elle va nous permettre de d‚tecter le fonctionnement du systŠme actuel existant et d'en<br /> d‚terminer les limites. En outre l'identification des acteurs concern‚s, ainsi que tous leurs besoins et actions accomplies qui devraient ˆtre plus<br /> faciles … traiter … travers le module via la sp‚cification des fonctionnalit‚s pertinentes, les utilisateurs, l'architecture adopt‚e du systŠme ainsi<br /> que les contraintes majeures.Objectifsÿ:Le module consiste … concevoir et … d‚velopper solution web de gestion des fiches de r‚ception et des<br /> rapports d'intervention, int‚grable dans la solution de CRM de l'entreprise et qui r‚pond aux exigences suivantes : Informatiser le processus de<br /> gestion des fiches de r‚ception et des rapports finaux.  Faciliter le traitement des requˆtes.  Gagner du temps, notamment en simplifiant les<br /> dures de communication entre les clients et les agents de l'entreprise.  Assurer l'int‚grit‚ des fiches et des rapports trait‚s. Consulter<br /> instantan‚ment chaque requˆte, … tout moment et en tout lieu, dŠs lors que l'on dispose d'une connexion internet.Ce qui nous amŠne … faire une ‚tude<br /> de l'existant, tant au niveau de l'‚tat actuel et de sa critique, que celui de la solution propos‚e.L'‚tude de l'existant permet de d‚tecter les<br /> insuffisances d'un domaine et de proposer des solutions … retenir. Nous commencerons cette ‚tude par une description de l'‚tat actuel.Etat actuel :Le<br /> systŠme actuel de gestion bons de r‚ception, comporte plusieurs obstacles pour que leur  traitement soit efficient, puisque les op‚rations sont<br /> effectu‚es manuellement et de fa‡on non norm‚e, le sch‚ma suivant donne une vue claire de l'ancien systŠme:.......L'‚tat actuel comme pr‚sent‚ dans<br /> la figure pr‚c‚dente pr‚sente la proc‚dure actuelle de r‚ception du mat‚riel et des requˆtes concernant le cloud.Critique de l'existant :Au cours de<br /> cette ‚tude, nous avons constat‚ un certain nombre de d‚faillances qui sont … l'origine de la gestion manuelle des diff‚rentes activit‚s. En effet<br /> nous avons remarqu‚ : La perte de temps lors de la recherche des donn‚es datant parfois de plusieurs mois voire plus. Travail manuel et<br /> bureaucratique r‚p‚titif. La difficult‚ de la mise … jour des informations circulant au niveau du centre de gestion.La dispersion des Bons de r<br /> ception.Le risque de perte des documents dont la trace a ‚t‚ perdue ce qui entraŒne l'incoh‚rence des donn‚es et le gƒchis d'opportunit‚s<br /> commerciales. L'incapacit‚ de l'archive pour garder tous les dossiers. Compte tenu des problŠmes cit‚s ci-dessus, ceci nous amŠne … avoir les<br /> fonctionnalit‚s d‚crites dans ce qui suit.Solution propos‚eÿ:Afin de rem‚dier aux insuffisances de l'ancien systŠme la solution propos‚e<br /> permettraÿdeÿ:Informatiser et centraliser des donn‚es. Mettre … jour des diff‚rentes fiches de r‚ception ou bien les rapports d'intervention au fur<br /> et … mesure des n‚cessit‚s.Assurer la proc‚dure qui permet la r‚alisation de la consultation et l'‚mission des fiches et rapports sur la plateforme<br /> Surtout d'offrir une tra‡abilit‚ efficace.Une analyse plus d‚taill‚e de notre solution sera r‚alis‚e dans la partie suivante.Sp‚cification des<br /> exigences : Cette phase consiste … comprendre le contexte du systŠme. Il s'agit de d‚terminer les fonctionnalit‚s<a href='http://www.memoireonline.com/07/08/1363/m_conception-realisation-application-gestion-centre-kinesie9.html' class="matched-text" title='http://www.memoireonline.com/07/08/1363/m_conception-realisation-application-gestion-centre-kinesie9.html' target='_blank'> et les acteurs les plus pertinents<br /> de pr‚ciser</a><a href='http://www.memoireonline.com/07/08/1363/m_conception-realisation-application-gestion-centre-kinesie9.html' class="matched-text" title='http://www.memoireonline.com/07/08/1363/m_conception-realisation-application-gestion-centre-kinesie9.html' target='_blank'> les risques les plus critiques et d'identifier les cas d'utilisation initiaux.Le systŠme dont l'entreprise</a> veut se doter, doit ˆtre op<br /> rationnel, convivial et offrant les informations n‚cessaires.Pour ceci, le systŠme … r‚aliser doit<a href='http://www.memoireonline.com/07/08/1363/m_conception-realisation-application-gestion-centre-kinesie9.html' class="matched-text" title='http://www.memoireonline.com/07/08/1363/m_conception-realisation-application-gestion-centre-kinesie9.html' target='_blank'> satisfaire les exigences de la totalit‚ des</a><br /> utilisateurs. Nous pr‚sentons<a href='http://www.memoireonline.com/07/08/1363/m_conception-realisation-application-gestion-centre-kinesie9.html' class="matched-text" title='http://www.memoireonline.com/07/08/1363/m_conception-realisation-application-gestion-centre-kinesie9.html' target='_blank'> dans ce qui suit tous les besoins fonctionnels ainsi</a> que les besoins non fonctionnels communs … tous ces acteurs<br /> Exigences fonctionnelsÿ:Les principales exigences fonctionnelles sont des rŠgles de gestion … suivre sont :La mise … jour r‚guliŠre et continue pour<br /> un ‚change des informations avec la plateforme aprŠs une ‚ventuelle rectification de la validit‚ de chaque op‚ration ‚tablie. S‚curit‚ d'accŠs : Le<br /> module devra assurer la s‚curit‚ et la confidentialit‚ des donn‚es et des traitements, tout en respectant les privilŠges accord‚s … chaque<br /> utilisateur du systŠme.S‚curit‚ des donn‚es : Le transfert des donn‚es entre les acteurs et au sein du systŠme informatique doit ˆtre s‚curis‚, et<br /> les donn‚es ‚chang‚es ne doivent dans aucun cas ˆtre modifiables par un acteur qui n'aurait pas eu les droits d'effectuer de telles op‚rations. Par<br /> ailleurs, les acteurs qui ont le plus faible privilŠge d'accŠs n'a la possibilit‚ d'accŠs qu'en consultation et ‚missions aux donn‚es relatives<br /> leurs profils.Exigences non fonctionnellesÿ:Hormis les exigences fondamentales, notre systŠme doit r‚pondre aux critŠres suivants :Convivialit‚ :ÿLe<br /> futur module doit ˆtre facile … utiliser. En effet, les interfaces utilisateurs doivent ˆtre conviviales c'est-…-dire simples, ergonomiques et adapt<br /> es … l'utilisateur.Performanceÿ: A travers ses fonctionnalit‚s, ce module doit r‚pondre … toutes les exigences des usagers d'une maniŠre optimale<br /> Efficacit‚: C'est-…-dire que ce systŠme doit minimiser l'utilisation des ressources: m‚moire, quantit‚ des informations ‚chang‚es, etc.Rapidit‚ de<br /> traitementÿ: Il est imp‚rativement n‚cessaire que la dur‚e d'ex‚cution des traitements soit minimale.S‚curit‚ÿ: Le systŠme doit garantir qu'aucune<br /> personne non autoris‚e ne n'a accŠs … cette fonctionnalit‚. Un autre aspect de la s‚curit‚ se manifeste par le fait qu'on soit s–r que le systŠme<br /> fonctionne correctement.Robustesse: Le module doit satisfaire ce critŠre en pr‚sence de donn‚es invalides comme l'‚tat de la fiche (close ou en cours<br /> Identification des acteurs et des cas d'utilisationsÿ:Les acteursÿ:Nous pourrons discerner un seul type d'acteurs … savoir les utilisateurs identifi<br /> s comme administrateurs de la solution Salesforce CRM de 3IS. Les utilisateurs class‚s en tant qu'Administrateur et pr‚sentant un statut d<br /> informaticien, gestionnaire, project manager, financier ou tout autre statut au sein de 3IS, sont responsables de la structure de gestion de la<br /> solution, le suivi et la mise … jour des donn‚es.Les fonctionnalit‚sÿ:Les fonctionnalit‚s attendues par le systŠme et saisissant un besoin<br /> fonctionnel sont d‚crites … leurs utilisateurs comme suitÿ:Cr‚er les fiches de r‚ceptionÿet les rapports d'intervention: Chaque agent, ayant les d<br /> accŠs … la plateforme Salesforce et poss‚dant les permissions n‚cessaires … la cr‚ation des objets de type ®ÿ Requˆteÿ¯, peut cr‚er des fiches et des<br /> rapports.G‚rer les fiches et les rapportsÿ: La gestion de ce type d'objet permet de modifier les informations pr‚sentes dans la base de donn‚es, la<br /> suppression des fiches ou la cl“ture des fiches lorsque l'intervention sera termin‚e.Contacter les clientsÿ: L'agent peut … tout moment contacter ses<br /> clients par le biais d'un e-mail tout prˆt, sans avoir recours … r‚diger les donn‚es. En effet le transfert des informations de la base de donn‚es<br /> diminue le gƒchis du temps et de l'effort qui s'ensuit de la collecte des informations pouvant ˆtre ‚parpill‚es ou sur des supports diff‚rente<br /> Imprimer les fiches et les rapportsÿ: C'est la fonctionnalit‚ la plus importante de ce module. En effet, les fiches de r‚ception servent de garantie<br /> pour les clients ayant d‚pos‚ leurs diverses demandes … l'entreprises.Langage de mod‚lisation adopt‚ÿ:[TODO]ModŠle du cas d'utilisationÿ:L<br /> utilisateur doit figurer dans la liste des utilisateurs du domaine priv‚ de la plateforme de l'entreprise  pour acc‚der aux autres fonctionnalit‚s du<br /> systŠme.ActeursAgent de l'entreprisePr‚conditionsL'utilisateur doit ˆtre connect‚ … Internet.L'agent possŠde un compte sur la plateforme.L<br /> utilisateur doit avoir toutes les permissions n‚cessaires … la cr‚ation, mise … jour, impression et envoie des fiches. L'entreprise cliente doit<br /> avoir un compte dans la plateforme.Au moins un contact de cette entreprise doit figurer dans la base de donn‚es.Post-conditionLa fiche de r‚ception<br /> ou bien le rapport d'intervention est imprim‚ ou envoy‚.Sc‚narioL'agent s'authentifie au prŠs du domaine priv‚ de l'entreprise.L'utilisateur remplit<br /> le formulaire relatif aux divers types d'information concernant la fiche.Il passe … l'impression ou … l'envoi. Pour ce faire deux boutons sont pr<br /> sents dans la page de d‚tails de cette requˆte.Enfin Il choisit et confirme l'op‚ration … effectuer.Ainsi, partant de ce cas d'utilisation bien d<br /> fini, nous pouvons approfondir nos travaux pour une conception plus d‚taill‚e.Ayant r‚alis‚ cette phase, dans laquelle nous avons fait l'‚tude de l<br /> existant et nous avons trait‚ le cas d'utilisation, nous avons r‚ussi … r‚pondre aux questions suivantes : Le module vaut-il la peine d'ˆtre<br /> entrepris ? Quels sont les principaux utilisateurs de notre futur module ? Quelles fonctionnalit‚s notre systŠme doit-il offrir pour satisfaire les<br /> besoins des acteurs ? Ce qui nous a permis de passer … la phase d'‚laboration, dans laquelle nous entamerons l'analyse approfondie du cas d<br /> utilisation via les diff‚rents diagrammes de s‚quence, d'activit‚ et de collaboration.Chapitre 2ÿ: Phase d'‚laborationAyant compris le contexte de<br /> notre systŠme lors de la phase pr‚c‚dente, l'objectif maintenant est d'approfondir notre compr‚hension afin de mieux mod‚liser notre travail. En fait<br /> pour la phase d'‚laboration nous sommes appel‚s … pr‚senter une ‚tude conceptuelle sp‚cifique du cas d'utilisation du chapitre pr‚c‚dent et … impl<br /> menter les diagrammes les plus importants.Diagramme d'activit‚ÿ:Figure 1 Diagramme d'activit‚Ce diagramme d‚crit d'une fa‡on g‚n‚rale les activit‚s<br /> que peut mener l'agent en utilisant ce module, notamment les choix qu'il peut faire et les actions qui en r‚sultent.Descriptionÿ:L'utilisateur s<br /> authentifie, et tente de consulter la liste des fiches et des rapports. Un message sera affich‚ s'il n'a pas les droits n‚cessaires, sinon, il peut<br /> acc‚der, et en fonction de ses choix, l'agent peut soit envoyer soit imprimer la fiche en question.Dans ce qui suit, nous allons ‚tudier le<br /> comportement du module selon l'enchainement chronologique grƒce aux diagrammes de s‚quence.Diagrammes de s‚quenceÿ:Diagramme de s‚quencesÿ:Diagramme<br /> de s‚quences du cas d'utilisation ®ÿImprimer Ficheÿ¯ÿ:ActeursEmploy‚ de la soci‚t‚.Pr‚conditionsL'agent doit avoir un compte utilisateur sous l<br /> espace priv‚ de la plateforme de Salesforce.L'agent doit avoir les autorisations n‚cessaires pour acc‚der aux fiches.Une imprimante doit exister.S<br /> quence nominativeÿL'utilisateur s'authentifie … l'espace priv‚ de la plateforme Salesforce de l'entreprise.Il consulte la liste des fiches de r<br /> ception.L'agent choisit la fiche … imprimer si elle existe.Il peut notamment cr‚er une nouvelle en cas de besoin.Lors de la terminaison de l<br /> intervention, l'utilisateur doit cl“turer la fiche Dans ce cas, cette derniŠre se transforme en un rapport d'intervention signalant les tƒches et r<br /> paration effectu‚es par l'agent.Par l'appui sur le bouton imprimer un document HTML est affich‚ pour visualiser le document avant son impression.L<br /> utilisateur peut alors imprimer.Diagramme de s‚quences du cas d'utilisation ®ÿEnvoyer e-mailÿ¯ÿ:ActeursEmploy‚ de la soci‚t‚.Pr‚conditionsL'agent<br /> doit avoir un compte utilisateur sous l'espace priv‚ de la plateforme de Salesforce.L'agent doit avoir les autorisations n‚cessaires pour acc‚der aux<br /> fiches.Un compte contact doit figurer dans la base de donn‚es et doit comporter une adresse e-mail.S‚quence nominativeÿL'utilisateur s'authentifie<br /> l'espace priv‚ de la plateforme Salesforce de l'entreprise.Il consulte la liste des fiches de r‚ception.L'agent choisit la fiche … imprimer si elle<br /> existe.Il peut notamment cr‚er une nouvelle en cas de besoin.Lors de la terminaison de l'intervention, l'utilisateur doit cl“turer la fiche Dans ce<br /> cas, cette derniŠre se transforme en un rapport d'intervention signalant les tƒches et r‚paration effectu‚es par l'agent.Ce dernier appuie alors sur<br /> le bouton ®ÿenvoyer e-mailÿ¯ Une nouvelle fenˆtre sera alors ouverte selon les pr‚f‚rences de l'utilisateur et les d‚tails de la fiche de r‚ception<br /> ou le rapport d'intervention seront affich‚s dans le corps de l'e-mail.L'agent apporte des modifications sur le texte si besoin.Finalement il appuie<br /> sur le bouton envoyer.Diagramme d'‚tat - transitionÿ:Ce type de diagrammes nous permet de visualiser et mieux comprendre les diff‚rents ‚tats des<br /> fiches ou les rapports. Dans ce qui suit, nous allons impl‚menter et d‚crire notre diagramme.[TODO Diagramme d'‚tat]Descriptionÿ:Au d‚but, la fiche<br /> est sous forme de requˆte, une fois cr‚‚e et sauvegard‚e, elle peut ˆtre modifi‚e imprim‚e ou supprim‚e. Si la r‚paration ou de maniŠre g‚n‚rale l<br /> intervention de l'entreprise soit faite, elle doit ˆtre cl“tur‚e pour qu'elle passe enfin … l'‚tat d'un rapport final d'intervention. Ce dernier peut<br /> ˆtre imprim‚, envoy‚ ou encore peut retourner … son ‚tat initial de fiche.Diagramme de collaborationÿ:Par les diagrammes de collaboration nous allons<br /> montrer les interactions entre les diff‚rents objets, en insistant plus particuliŠrement sur la structure spatiale statique.[TODO Diagramme de<br /> collaboration]L'‚tude cons‚quente des diagrammes d'activit‚s, de s‚quence et de collaboration nous a permis de mettre en valeur les principales<br /> fonctionnalit‚s du module, qui ainsi ‚labor‚ et impl‚ment‚, nous facilite une transition simple et effective … la phase de construction.Chapitre3ÿ<br /> Phase de constructionL'objectif essentiel dans la phase de construction, est de centrer le d‚veloppement du module web, prˆt … ˆtre exploit‚ par les<br /> diff‚rents utilisateurs. Nous terminons dans ce chapitre ci, la conception et l'impl‚mentation.Conceptionÿ:Architecture mat‚rielleÿ: Diagramme de d<br /> ploiementÿ:Dans ce diagramme, nous allons d‚crire l'architecture physique de notre solution et son interaction avec tout le systŠme. Le diagramme<br /> suivant visualise les diff‚rents nouds permettant de r‚aliser nos fonctionnalit‚s fondamentales.[TODO diagramme de d‚ploiement]Descriptionÿ:La<br /> plateforme Salesforce est une solution h‚berg‚e sur le cloud et notre intervention se fait au niveau des machines clientes. Des fichiers JAVASCRIPT<br /> ont ‚t‚ int‚gr‚s pour r‚pondre aux besoins exprim‚s pr‚c‚demment.Mise en place du systŠmeÿ:Outils de d‚veloppementÿ:La plateforme Salesforce offre<br /> aux d‚veloppeurs un environnement de d‚veloppement dynamique selon l'‚dition de la solution. Dans la pr‚sente ‚dition l'environnement contient une<br /> interface permettant d'impl‚menter des fonctions JAVASCRIPT. Partant de ce dernier on peut g‚n‚rer les e-mails et les pages HTML souhait‚es.Cet<br /> environnement offre des fonctions permettant d'interagir avec les diff‚rents objets de la base de donn‚es.Langages de programmationÿ:JAVASCRIPTÿ:HTML<br /> ÿ:CSS3ÿ:CSS3 (Cascading Style Sheets 3) ‚tant un langage fortement li‚ … HTML qui sert … structurer les pages web ‚crites en HTML ou en XML. [TODO<br /> reste de la description]De ce fait, on introduira dans le chapitre qui suit notre produit d‚ploy‚ et mis en production avec les recommandations n<br /> cessaires.Chapitre 4ÿ: Phase de transitionLa phase de transition constitue la derniŠre phase de notre processus d‚veloppement, dans laquelle notre<br /> module est en version finale. Nous terminons par la repr‚sentation de quelques interfaces de notre solution cloud.Les deux fonctions sont atteintes<br /> via les boutons suivantsÿ:ModŠle final de la page … imprimerÿ: Le recto de la pageÿ:Le Verso de la pageÿ:ModŠle final de l'email … imprimerÿ:Au cours<br /> de ce chapitre nous avons test‚ notre solution dans son environnement de production r‚el en pr‚sentant quelques interfaces graphiques. Le module est<br /> d‚sormais int‚gr‚ et utilisable par les diff‚rents utilisateurs de l'entreprise.Cette partie de notre stage d'‚t‚ s'est inscrite dans le cas de la r<br /> alisation d'un module web cot‚ client int‚gr‚ dans une solution cloud qui permet la gestion des fiches de r‚ception et des rapports d'intervention.Ce<br /> travail fut d'un int‚rˆt consid‚rable, dans le cas o— il nous a permis d'atteindre tous les objectifs que nous nous sommes fix‚s. En effet, ce fut<br /> pour nous un passage du cadre th‚orique vers un environnement r‚el de travail, afin d'exercer nos connaissances acquises lors de notre cursus<br /> universitaire et une initiation … la vie professionnelle.Dans la partie suivante nous allons introduire une autre fonctionnalit‚  impl‚ment‚e dans le<br /> cadre de notre stage qui est consid‚r‚e comme une excellente approche de personnalisation des offres de l'entreprise 3IS ayant pour but la<br /> satisfaction des clients potentiels en r‚pondant exactement … leurs besoins.Partie 2:Module de personnalisation des offres ®ÿCloudÿ¯Introductionÿ<br /> TODO pr‚sentation web marketing][TODO pr‚sentation cloud computinng et son utilisation en Tunisie]Dans cette partie nous allons nous int‚resser aux<br /> diff‚rentes phases de construction du module de personnalisation des offres du cloud computing. Une phase d'incubation sera r‚alis‚e dans le premier<br /> chapitre d‚crivant l'‚tat de l'art et la solution adopt‚e rependant aux besoins exacts des prospects. En second lieu, nous allons passer … la phase d<br /> laboration o— nous nous approfondirons dans l'aspect fonctionnel de notre solution avant d'entamer la phase de construction  qui aura pour objectif<br /> de centrer le d‚veloppement. Enfin nous terminerons par la pr‚sentation de quelques interfaces de notre module qui, en outre, constitue la derniŠre<br /> phase du processus qui est celle de transition. Chapitre 1ÿ: Phase d'incubationCette phase de notre rapport ‚tant indispensable … la r‚alisation de<br /> ce module nous permet de d‚cerner les besoins exacts de l'entreprise … travers la pr‚sentation et la critique du systŠme actuel. Nous allons d‚tecter<br /> tout au long de cette analyse les raisons ayant pouss‚ l'entreprise … adopter une telle strat‚gie de marketing en critiquant les systŠmes pr‚sents<br /> sur le march‚, ce qui nous mŠne … d‚finir les utilisateurs concern‚s par ce module et les fonctionnalit‚s auxquelles le systŠme doit r‚pondre.Partant<br /> des exigences fonctionnelles et non fonctionnelles, des diff‚rents acteurs intervenants dans ce module, nous allons proposer une architecture<br /> physique et logique ad‚quate ainsi que les contraintes majeures.Objectifs:La pr‚sente partie consiste … concevoir et … d‚velopper solution web de<br /> personnalisation de diff‚rentes offres que l'organisme d'accueil propose … ses clients. Il s'agit notamment d'un module int‚grable dans un nouveau<br /> site web de web marketing r‚pondant aux besoins suivants :S'approcher au mieux des prospects ayant des besoins trŠs sp‚cifiques. Adopter une strat<br /> gie de marketing cibl‚e qui essaye de comprendre les clients. Gagner du temps, notamment en simplifiant les proc‚dures de communication entre les<br /> clients et les agents de l'entreprise. Offrir aux diff‚rents clients une interface de comparaison des offres diverses.Consulter instantan‚ment chaque<br /> offre, … tout moment et en tout lieu, dŠs lors que l'on dispose d'une connexion internet.Ce qui nous amŠne … faire une ‚tude de l'existant, tant au<br /> niveau de l'‚tat actuel et de sa critique, que celui de la solution propos‚e.L'‚tude de l'existant permet de d‚tecter les insuffisances d'un domaine<br /> et, par cons‚quent, proposer des solutions … retenir. Nous commencerons cette ‚tude par une description de l'‚tat actuel.Etat actuel :Le systŠme<br /> actuel de pr‚sentation des services cloud admet plusieurs insuffisances, puisqu'en Tunisie la proc‚dure de communication et de l'obtention de l<br /> information concernant les offres reste lente, le sch‚ma suivant donne une vue claire de l'ancien systŠme:.......L'‚tat actuel comme pr‚sent‚ dans la<br /> figure pr‚c‚dente pr‚sente les ‚tapes que chaque prospect doit passer par en vue d'obtenir la r‚ponse … ses besoins sp‚cifiques.Critique de l<br /> existant :Au cours de cette ‚tude, nous avons constat‚ un certain nombre de d‚faillances qui sont … l'origine de la gestion manuelle des diff‚rentes<br /> activit‚s. En effet, nous avons remarqu‚ : La perte de temps lors de la recherche des diff‚rentes offres. Travail manuel et bureaucratique r‚p‚titif<br /> concernant la r‚ponse aux demandes de devis.Absence d'un systŠme centralis‚ et dynamique qui regroupe chaque caract‚ristique des hyperviseurs et des<br /> services cloud.Le d‚sint‚rˆt probable des prospects … cause de l'incompr‚hension des combinaisons et notamment … cause de la lourdeur de la proc‚dure<br /> Pour r‚pondre aux limites du systŠme actuel, nous sommes amen‚s … d‚crire les fonctionnalit‚s que le prochain systŠme doit r‚soudre.Solution propos<br /> eÿ:Afin de rem‚dier aux insuffisances de l'ancien systŠme la solution propos‚e permettraÿdeÿ:Informatiser et centraliser des donn‚es. Offrir une<br /> interface ergonomique et simple de comparaison des diff‚rentes offres, de leurs caract‚ristiques et de leurs prix permettant de comprendre au mieux<br /> les enjeux et d'avoir une id‚e pr‚cise sur les donn‚es pr‚sentes.Faciliter la communication entre les prospects et l'entreprise. Surtout d<br /> automatiser le travail r‚p‚titif des employ‚s en d‚mocratisant l'information.Une analyse plus d‚taill‚e de notre solution sera r‚alis‚e dans la<br /> partie suivante.Sp‚cification des exigences : Cette phase consiste … comprendre le contexte du systŠme. Il s'agit de d‚terminer les fonctionnalit‚s<br /> et les acteurs les plus pertinents<a href='http://www.memoireonline.com/07/08/1363/m_conception-realisation-application-gestion-centre-kinesie9.html' class="matched-text" title='http://www.memoireonline.com/07/08/1363/m_conception-realisation-application-gestion-centre-kinesie9.html' target='_blank'> et d'identifier les cas d'utilisation initiaux.Le systŠme dont</a> l'entreprise veut se doter, doit ˆtre op‚rationnel<br /> convivial et offrant les informations n‚cessaires. Pour ce faire, il doit satisfaire les exigences de la totalit‚ des utilisateurs. Nous pr‚sentons<a href='http://www.memoireonline.com/07/08/1363/m_conception-realisation-application-gestion-centre-kinesie9.html' class="matched-text" title='http://www.memoireonline.com/07/08/1363/m_conception-realisation-application-gestion-centre-kinesie9.html' target='_blank'><br /> dans ce qui suit tous les besoins fonctionnels</a> ainsi que les besoins non fonctionnels communs … tous ces acteurs.Exigences fonctionnelsÿ:Les<br /> principales exigences fonctionnelles du systŠme sont: Ajouter de nouvelles offres et mettre … jour les offres existantes.Permettre aux prospects de<br /> combiner n'importe quel ensemble de caract‚ristiques en fonction du type de service et d'avoir une id‚e claire sur les prix de chaque combinaison.S<br /> curiser l'accŠs et assurer la confidentialit‚ des donn‚es en respectant les privilŠges accord‚s … chaque utilisateur interne de l'entreprise<br /> Exigences non fonctionnellesÿ:En d‚pit des exigences fonctionnelles, le module doit r‚pondre aux exigences suivantes :Convivialit‚ :ÿLe module doit<br /> ˆtre facile … utiliser. Les interfaces du site web doivent ˆtre conviviales c'est-…-dire simples, ergonomiques et adapt‚es aux prospects.Performanceÿ<br /> A travers ses fonctionnalit‚s, ce module doit r‚pondre … toutes les exigences des usagers d'une maniŠre optimale.Efficacit‚: Ce systŠme doit<br /> minimiser l'utilisation des ressources en termes de m‚moire et de la quantit‚ des informations ‚chang‚es.Rapidit‚ de traitementÿ: On cherche<br /> travers ce critŠre … optimiser le temps de traitement qui est en grande importance.S‚curit‚ÿ: Ou encore ®ÿSecurityÿ¯, cette exigence impose que le<br /> module doit garantir qu'aucune personne non autoris‚e ne n'a accŠs … la base de donn‚es. Un autre aspect de la s‚curit‚ se manifeste par le fait qu<br /> on soit s–r que le systŠme fonctionne correctement, on parle ‚videment de la ®ÿSafetyÿ¯.Robustesse: Le module doit satisfaire ce critŠre en pr‚sence<br /> de donn‚es invalides comme les combinaisons incorrectes des diff‚rentes caract‚ristiques ou bien le rapport entre capacit‚ CPU et m‚moire RAM, etc<br /> Identification des acteurs et des cas d'utilisationsÿ:Les acteursÿ:Nous pourrons discerner parmi les acteurs deux typesÿ:  Les utilisateurs identifi<br /> s comme administrateurs du site web de l'entreprise.Les clients ou prospects de l'entreprise.Les utilisateurs class‚s en tant qu'Administrateurs et<br /> pr‚sentant un statut d'employ‚ au sein de 3IS, sont responsables de la structure de gestion du site, le suivi et la mise … jour des donn‚es.Les<br /> agents r‚pertori‚s en tant que Clients et pr‚sentant un statut administratif (entreprise, organisme public ou personne physique) sont invit‚s<br /> consulter les offres de fa‡on informatis‚e. Les fonctionnalit‚sÿ:Les fonctionnalit‚s attendues par le systŠme et saisissant un besoin fonctionnel<br /> sont d‚crites … leurs utilisateurs comme suit, concernant les employ‚s, ils auront …:Cr‚er les offres du cloud.G‚rer ces offres, leurs caract<br /> ristiques.G‚rer les caract‚ristiques, les prix unitaires de chacune d'entre elles.En ce qui concerne les clients, ils auront …ÿ:Consulter les pages<br /> des trois services qu'offre l'entreprise.Saisir leurs besoins sp‚cifiques aux offres (m‚moire RAM, CPU, IP publiques, types d'hyperviseur, systŠme d<br /> exploitation, etc.).Valider leurs choix.B‚n‚ficier ainsi d'une pr‚sentation ergonomique de leur choix.Langage de mod‚lisation adopt‚ÿ:[TODO]ModŠle du<br /> cas d'utilisationÿ:Il s'agit du modŠle du diagramme des cas d'utilisation g‚n‚ral, dont les principales fonctionnalit‚s ont ‚t‚ cit‚es ci-dessus<br /> ActeursAgent de l'entreprise.Prospect ou clients.Pr‚conditionsL'administrateur et le prospect doivent ˆtre connect‚s … Internet.L'administrateur doit<br /> avoir toutes les permissions n‚cessaires … la cr‚ation, mise … jour, suppression et la publication des offres. Post-conditionsAucune.Sc‚narioL'agent<br /> s'authentifie au prŠs du domaine de l'entreprise.Il cr‚e, met … jour ou publie une offre.Le prospect consulte l'offre.Il saisit les informations<br /> concernant cette derniŠre.Enfin il valide et visualise les informations.Ainsi, ce cas d'utilisation nous permet d'avoir une id‚e globale du<br /> fonctionnement du systŠme et des limites de l'intervention de chaque acteur.Ayant r‚alis‚ cette phase, qui explique l'‚tat actuel et ses limites, et<br /> propose une solution pouvant r‚pondre aux besoins exprim‚s, nous avons r‚ussi … d‚cerner notre cas d'utilisation. Ce qui nous a permis de passer … la<br /> phase d'‚laboration, dans laquelle nous r‚aliserons une analyse approfondie du cas d'utilisation via les diff‚rents diagrammes.Chapitre 2ÿ: Phase d<br /> laborationÿAyant compris le contexte g‚n‚ral de notre module, et aprŠs avoir bien d‚gag‚ nos besoins, nous allons entamer la conception d‚taill‚e de<br /> notre solution. Cette phase est consid‚r‚e comme ‚tant une ‚tape primordiale de la concr‚tisation du cas d'utilisation o— nous sommes appel‚s<br /> concevoir les diagrammes d'activit‚, de s‚quence et de collaboration.Diagramme d'activit‚ÿ:Le pr‚sent diagramme sp‚cifie les diff‚rentes activit‚s<br /> que peuvent mener les utilisateurs grƒce … ce module. Il d‚crit ainsi les actions qui r‚sultent des choix effectu‚s.Descriptionÿ:L'utilisateur, en<br /> fonction des pages consult‚es (serveur cloud, cloud publique ou cloud priv‚) aura … saisir les informations sp‚cifiques et b‚n‚fice des r‚sultats<br /> retourn‚ par le calculateur.Dans ce qui suit, nous allons ‚tudier le comportement du module selon l'enchainement chronologique grƒce aux diagrammes<br /> de s‚quence.Diagramme de s‚quencesÿ:Diagramme de collaborationÿ:Chapitre 3: Phase de constructionÿ:Chapitre 4ÿ: Phase de transitionÿhttp://fr<br /> slideshare.net/yasibe1988/rapport-pfe-creargiemarocensatfinalhttp://fr.slideshare.net/yasibe1988/rapport-pfe-creargiemarocensatfinalhttp://www.isgs<br /> rnu.tn/uploaded/files/pfe/Guide_rapport_stage_informatique.pdfhttp://www.isgs.rnu.tn/uploaded/files/pfe/Guide_rapport_stage_informatique.pdf<br /></p>
+                        
+                        
+                    </div>
+                    
+                </div> 
+            </div>
+
+            <div id="footer">
+                <div id="footermenu">
+                    <div id="col1">
+                        <ul>
+                            <li>
+                                <a title="Plagiarism detection software" href="http://www.scanmyessay.com/plagiarism-detection-software.php">Plagiarism Detection Software</a>
+                            </li>
+                            <li>
+                                <a title=" Plagiarism Test" href="http://www.scanmyessay.com/plagiarism-test.php">Plagiarism Test </a>
+                            </li>
+                            <li>
+                                <a title="Plagiarism Detector" href="http://www.scanmyessay.com/plagiarism-detector.php">Plagiarism Detector</a>
+                            </li>
+                            <li>
+                                <a title="Detect Plagiarism" href="http://www.scanmyessay.com/detect-plagiarism.php">Detect Plagiarism</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="col2">
+                        <ul>
+                            <li>
+                                <a title="Essay Checker" href="http://www.scanmyessay.com/essay-checker.php">Essay Checker</a> 
+                                | <a href="http://www.scanmyessay.com/free-check-for-plagiarism.php">Free Check for Plagiarism</a>
+                            </li>
+                            <li>
+                                <a title="Free lesson plans" href="http://www.scanmyessay.com/lesson-plans.php">Lesson plans</a>
+                            </li>
+                            <li>
+                                <a title="Avoid plagiarism" href="http://www.scanmyessay.com/avoid-plagiarism.php">Avoid Plagiarism</a>
+                            </li>
+                            <li>
+                                <a title="Plagiarism Check" href="http://www.scanmyessay.com/plagiarism-check.php">Plagiarism Check</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="col3">
+                        <ul>
+                            <li>
+                                <a title="Plagiarism prevention software" href="http://www.scanmyessay.com/plagiarism-prevention.php">Plagiarism Prevention</a>
+                            </li>
+                            <li>
+                                <a title="Turnitin" href="http://www.scanmyessay.com/turnitin.php">Turnitin </a> | <a href="http://www.scanmyessay.com/check-for-plagiarism-free.php">Check for Plagiarism Free</a>
+                            </li>
+                            <li>
+                                <a title="Editing services" href="http://www.scanmyessay.com/essay-marking/index.php">Editing Services</a>
+                            </li>
+                            <li>
+                                <a title="Free Scanner Software" href="http://www.essaycoursework.com/coursework-writing.php">Coursework writing</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="footerbottom">
+                    <p>
+                        Copyright © 2012 All Rights Reserved. 
+                        <a href="http://www.scanmyessay.com">Scan My Essay</a> 
+                        - Free Plagiarism Scanner, Checker and Detection Tool.  
+                        Viper and ScanMyEssay.com are trading names of Angel Business Limited, 
+                        a Company registered in England and Wales with Company Registration No: 07344835, 
+                        The Loft, 3 Plumptre Street, The Lace Market, Nottingham NG1 1JL | 
+                        <a href="http://www.scanmyessay.com/viper-keygen-crack.php">Warning - Viper Keygen / Viper Crack</a>
+                    </p>
+                    <p>
+                        Please note that by using ScanMyEssay.com, VIPER and any other  software or resources on the ScanMyEssay Website, you are signifying  your agreement
+                        to our <a href="http://www.scanmyessay.com/terms.php">terms and conditions</a>, and our <a href="http://www.scanmyessay.com/privacy-policy.php">privacy policy</a> | <a href="http://www.scanmyessay.com/sitemap.xml">XML sitemap</a> 
+                        | <a href="http://www.scanmyessay.com/ror.xml">ROR</a> 
+                        | <a href="http://www.scanmyessay.com/urllist.txt">TXT</a>
+                        | <a href="http://www.scanmyessay.com/sitemap.html">HTML</a>
+                        | <a href="http://www.scanmyessay.com/sitemap.php">PHP</a> | <a href="http://cn.scanmyessay.com">剽窃检查</a>
+                        | <a href="http://es.scanmyessay.com">Verificador de plagio gratuito</a> 
+                        | <a href="http://fr.scanmyessay.com/">Détecteur de plagiat gratuit</a> 
+                        | <a href="http://in.scanmyessay.com/">Viper साहित्यिक चोरी जांचने का एक निशुल्क साधन...</a>
+
+                    </p>
+                </div> 
+            </div>
+
+        </div>
+         
+    </body>
+</html>

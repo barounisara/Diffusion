@@ -1,0 +1,191 @@
+create or replace type projet_t as object (
+	 noP int, 
+	 livraisonP date, 
+	 totalBudgetP real, 
+	 margeP real
+) 
+not final not instantiable;
+/
+create or replace type usine_t as object ( 
+	noU int, 
+	villeU varchar(10)
+);
+/
+create or replace type projet_termine_t under projet_t (
+	totalDepensePT real
+);
+/
+create or replace type compteBanque_t as object( x 
+	noCB int, 
+	soldeCB real,
+	dateouvCB date, 
+	datefinCB date
+);
+/
+create or replace type projet_courant_t under projet_t (
+	slDepensePC real, 
+	cumulpayePC real, 
+	margeDispPc real, 
+	refCB ref compteBanque_t
+);
+/
+create or replace type chargeProjet_t as object( 
+nasCP int, 
+refProjetCourant ref projet_courant_t, 
+refUsine ref usine_t
+);
+/
+create or replace type chef_t
+create or replace  type sitechantier_t as object(
+	noSC int, 
+	villeSC varchar(10),
+	refchefDirige ref chef_t
+);
+/
+create or replace type sitesupervide_t as varray(3) of ref sitechantier_t;
+/
+create or replace type chef_t as object(
+nas int,
+anServ int, 
+refSitSup sitesupervide_t
+);
+/
+create or replace type associe_t as object ( 
+	noAs int, 
+	nomAs varchar(10),
+	 capital real
+);
+/
+create or replace type lesassocies_t as table of associe_t;
+/
+create or replace type lessiteschant_t as table of ref sitechantier_t;
+/
+create or replace type clientPromo_t as object(
+	matC int, 
+	nomC varchar(10), 
+	adrC varchar(20), 
+	lesChantiers lessiteschant_t, 
+	lesAssocies lesassocies_t
+);
+/
+create or replace type proprietaire_t as object(
+	refclient ref clientPromo_t, 
+	refProjet ref projet_termine_t
+);
+/
+/******************Création des tables*******************/
+create table Usine of Usine_t(
+	CONSTRAINT pk_usine PRIMARY KEY (noU)
+);
+/
+create table Chef of chef_t(
+	CONSTRAINT pk_chef PRIMARY KEY (nas)
+);
+/
+create table Chantier of sitechantier_t(
+	CONSTRAINT pk_site PRIMARY KEY (noSC)
+);
+/
+create table CompteBancaire of compteBanque_t(
+	CONSTRAINT pk_banque PRIMARY KEY (noCB)
+);
+/
+create table ChargeProjet of chargeProjet_t (
+	CONSTRAINT pk_charge PRIMARY KEY (nasCP)
+);
+/
+
+create table Prop of proprietaire_t
+	/
+create table Projet of projet_t
+(CONSTRAINT pk_projet PRIMARY KEY (noP));
+/
+create table ClientPromo of clientPromo_t
+(CONSTRAINT pk_clt PRIMARY KEY (matC))
+nested table lesAssocies store as associes_tab
+nested table leschantiers store as chanties_tab 
+/
+
+/******************Création des contraintes*******************/
+
+
+Alter table Usine add constraint CK_usine check(noU between 0 and 100 );
+/
+Alter table Chantier add constraint CK_chantier check(noSc between 100 and 999);
+/
+Alter table Projet add constraint CK_projet check(noP between 1000 and 4999);
+/
+Alter table associes_tab add constraint CK_associe check(noAs between 5000 and 6000);
+/
+Alter table CompteBancaire add constraint CK_banque check(noCB between 10000 and 15000);
+/
+Alter table ChargeProjet add constraint CK_charge check(nasCP between 1 and 75);
+/
+Alter table Chef add constraint CK_chef check(nas between 80 and 99);
+/
+/*************************Insertion**************************/
+insert into Usine Values (1,'megrine');
+/
+insert into Usine Values (2,'ben arous');
+/
+insert into Usine Values (3,'cedria');
+/
+/*****/
+
+insert into Projet values (projet_termine_t(1000,'06/02/2013',155.2,14.2,5.2));
+/
+insert into Projet values (projet_termine_t(1001,'06/02/2013',155.2,14.2,5.2));
+/
+insert into Projet values (projet_termine_t(1003,'06/02/2013',155.2,14.2,5.2));
+/
+/*****/
+insert into CompteBancaire values (10000,123,'12/12/2012','12/12/2022');
+/
+insert into CompteBancaire values (10020,123,'12/12/2012','12/12/2022');
+/
+insert into CompteBancaire values (10080,123,'12/12/2012','12/12/2022');
+/
+/*******/
+
+insert into Projet values (projet_courant_t(1004,'06/02/2013',155.2,14.2,5.5,12.2,15.2, (SELECT REF(c) from CompteBancaire c where c.noCB = 10000  )));
+/
+insert into Projet values (projet_courant_t(1005,'06/02/2013',155.2,14.2,5.5,12.2,15.2, (SELECT REF(c) from CompteBancaire c where c.noCB = 10020  )));
+/
+insert into Projet values (projet_courant_t(1006,'06/02/2013',155.2,14.2,5.5,12.2,15.2, (SELECT REF(c) from CompteBancaire c where c.noCB = 10080  )));
+/
+/*******/
+insert into chargeProjet Values (3,(select treat(ref(p) as ref projet_courant_t )from projet p where p.noP=1004 ),(select ref(u) from usine u where u.noU=10 ));
+insert into chargeProjet Values (5,(select treat(ref(p) as ref projet_courant_t )from projet p where p.noP=1005 ),(select ref(u) from usine u where u.noU=1 ));
+
+/*****/
+insert into Chef values (81,15,NULL)
+/*****/
+insert into Chantier values(100,'tunis',(SELECT REF(C) from chef C  where C.nas = 81 ))
+insert into Chantier values(101,'ariena',(SELECT REF(C) from chef C  where C.nas = 81 ))
+insert into Chantier values(102,'nabeul',(SELECT REF(C) from chef C  where C.nas = 81 ))
+/*****/
+
+
+
+update chef c set c.refSitSup = sitesupervide_t((select ref(ch) from Chantier ch where ch.noSC = 100 ),(select ref(ch) from Chantier ch where ch.noSC = 101 ),(select ref(ch) from Chantier ch where ch.noSC = 102 )) where c.nas=81 ;
+	/
+
+insert into clientpromo values (1 , 'barkaoui' , 'malek' , lessiteschant_t(( select ref(ch) from chantier ch where ch.noSc = 100 )) , lesassocies_t(associe_t(5124 , 'malek' , 456)) ) ;
+
+insert into Prop Values ((select ref(c) from ClientPromo c here c.matC=1 ),(select treat(ref(p) as ref projet_termine_t )from projet p where p.noP=1000 ));
+
+
+
+/****** les requetes *****/
+
+select   A.*  from ClientPromo p , table(p.lesAssocies)A where p.matC = 1
+
+select  treat(value(p) as projet_termine_t).totalDepensePT from projet p where value(p) is of ( only projet_termine_t)
+
+select ch.refUsine.noU from ChargeProjet ch where ch.refProjetCourant.nop = 1004
+   
+
+
+
+
+
